@@ -1,0 +1,23 @@
+# Packet captures can contain private traffic. Never commit them.
+*.pcap
+*.pcapng
+*.cap
+
+# Logs and output
+*.log
+out/
+reports/
+
+# Node
+node_modules/
+
+# Secrets
+.env
+.env.*
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+.claude/

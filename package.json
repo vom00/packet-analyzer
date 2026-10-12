@@ -1,0 +1,17 @@
+{
+  "name": "packet-analyzer",
+  "version": "0.1.0",
+  "description": "Reads a .pcap capture and decodes Ethernet, ARP, IPv4, IPv6, TCP, UDP, ICMP and DNS by hand.",
+  "main": "src/cli.js",
+  "bin": {
+    "packet-analyzer": "src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "private": true
+}
