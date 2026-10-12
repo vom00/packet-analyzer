@@ -84,7 +84,15 @@ Top services
 
 ## What I learned
 
-TODO (Vyom): write this part yourself after running it on your own traffic.
+AI wrote the code, so I learned by reading it one layer at a time and following a packet from the file header down to the DNS name.
+
+- A pcap file starts with a magic number, and that number tells you the byte order for everything after it. The same format can be little-endian or big-endian depending on the machine that saved it ([`src/pcap.js`](src/pcap.js)).
+- Every header is fixed offsets. The EtherType is at byte 12 of the frame, the IPv4 source address is at byte 12 of the IP header, and each TCP flag is one bit in a single byte ([`src/decode.js`](src/decode.js)).
+- Small Ethernet frames get padded with extra bytes. The IPv4 total length field is how you know where the real data stops.
+- Only the first piece of a fragmented IPv4 packet has the TCP or UDP header. Later pieces are just data, so the decoder stops at the IP layer for them.
+- A new TCP connection starts with a SYN that has no ACK. Counting those shows how many connections a capture opened ([`src/stats.js`](src/stats.js)).
+- DNS saves space by pointing back to a name earlier in the message. A bad packet could make those pointers loop forever, so the decoder gives up after 10 jumps.
+- A cut-off packet makes a read run past the end of the buffer. Catching that error lets the tool mark the packet as truncated and keep going instead of crashing.
 
 ## Privacy
 
